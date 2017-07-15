@@ -6,6 +6,20 @@ import * as actions from '../actions';
 
 
 class ListItem extends Component {
+
+  renderDescription() {
+
+    const { library, selectedLibraryId } = this.props;
+
+    if (library.id === selectedLibraryId) {
+      return (
+        <Text>
+          {library.description}
+        </Text>
+      )
+    }
+  }
+
   render() {
 
     const { titleStyle } = styles;
@@ -19,6 +33,7 @@ class ListItem extends Component {
           <CardSection>
             <Text style={titleStyle}>{title}</Text>
           </CardSection>
+          {this.renderDescription()}
         </View>
       </TouchableWithoutFeedback>
 
@@ -33,4 +48,8 @@ const styles = {
   }
 }
 
-export default connect(null, actions)(ListItem);
+const mapStateToProps = state => {
+  return { selectedLibraryId: state.selectedLibraryId };
+};
+
+export default connect(mapStateToProps, actions)(ListItem);
